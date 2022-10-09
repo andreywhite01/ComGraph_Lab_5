@@ -24,6 +24,7 @@ namespace ComGraph_Lab_5
             for (int i = 0; i < NUMBER_OF_VERTIX; ++i)
             {
                 points[i] = new PointF3D(x[i] * 50.0f, -y[i] * 50.0f, z[i] * 50.0f, 1.0f);
+                defaultPoints[i] = new PointF3D(x[i] * 50.0f, -y[i] * 50.0f, z[i] * 50.0f, 1.0f);
             }
             setFaces();
             makePerspective();
@@ -31,7 +32,7 @@ namespace ComGraph_Lab_5
 
         public void setDefault()
         {
-            points = defaultPoints;
+            points = defaultPoints.Clone();
             setFaces();
         }
 
@@ -45,36 +46,6 @@ namespace ComGraph_Lab_5
             faces[5] = new VectorF3D(new PointF3D[DIMENSION] { points[1], points[2], points[6], points[5] });
         }
 
-        private void makePerspective()
-        {
-            setFaces();
-            if (directP)
-            {
-                apply_DirectPerspective();
-                return;
-            }
-            if (onePointP)
-            {
-                apply_OnePointPerspective();
-                return;
-            }
-            if (kavalieP)
-            {
-                apply_KavaliePerspective();
-                return;
-            }
-            if (kabineP)
-            {
-                apply_KabinePerspective();
-                return;
-            }
-            if (ortoP)
-            {
-                apply_OrtoPerspective();
-                return;
-            }
-        }
-
         #region вращение вокруг осей
         private void rotateX(float a)
         {
@@ -84,7 +55,6 @@ namespace ComGraph_Lab_5
                 { 0, -(float)Math.Sin(a),   (float)Math.Cos(a), 0 },
                 { 0, 0,                     0,                  1 }
             };
-
             points.dot(rotateMatrix);
             setFaces();
         }
@@ -96,7 +66,6 @@ namespace ComGraph_Lab_5
                 { (float)Math.Sin(a),   0, (float)Math.Cos(a),  0 },
                 { 0,                    0, 0,                   1 }
             };
-
             points.dot(rotateMatrix);
             setFaces();
         }
@@ -108,7 +77,6 @@ namespace ComGraph_Lab_5
                 { 0,                    0,                  1,  0 },
                 { 0,                    0,                  0,  1 }
             };
-
             points.dot(rotateMatrix);
             setFaces();
         }
@@ -150,7 +118,6 @@ namespace ComGraph_Lab_5
                 { 0, 0, 1, 0 },
                 { 0, 0, 0, 1 }
             };
-
             points.dot(scaleMatrix);
         }
         private void scaleY(float k)
@@ -161,7 +128,6 @@ namespace ComGraph_Lab_5
                 { 0, 0, 1, 0 },
                 { 0, 0, 0, 1 }
             };
-
             points.dot(scaleMatrix);
         }
         private void scaleZ(float k)
@@ -172,7 +138,6 @@ namespace ComGraph_Lab_5
                 { 0, 0, k, 0 },
                 { 0, 0, 0, 1 }
             };
-
             points.dot(scaleMatrix);
         }
         private void scaleAll(float k)
@@ -183,7 +148,6 @@ namespace ComGraph_Lab_5
                 { 0, 0, 1, 0 },
                 { 0, 0, 0, 1 / k }
             };
-
             points.dot(scaleMatrix);
         }
 
@@ -226,7 +190,6 @@ namespace ComGraph_Lab_5
                 { 0, 0, 1, 0 },
                 { k, 0, 0, 1 }
             };
-
             points.dot(moveMatrix);
         }
         private void moveY(float k)
@@ -237,7 +200,6 @@ namespace ComGraph_Lab_5
                 { 0, 0, 1, 0 },
                 { 0, k, 0, 1 }
             };
-
             points.dot(moveMatrix);
         }
         private void moveZ(float k)
@@ -248,7 +210,6 @@ namespace ComGraph_Lab_5
                 { 0, 0, 1, 0 },
                 { 0, 0, k, 1 }
             };
-
             points.dot(moveMatrix);
         }
 
@@ -286,7 +247,6 @@ namespace ComGraph_Lab_5
                 { 0, 0, 1, 0 },
                 { 0, 0, 0, 1 }
             };
-
             points.dot(reflectMatrix);
         }
         private void reflectY()
@@ -297,7 +257,6 @@ namespace ComGraph_Lab_5
                 { 0, 0, 1, 0 },
                 { 0, 0, 0, 1 }
             };
-
             points.dot(reflectMatrix);
         }
         private void reflectZ()
@@ -308,7 +267,6 @@ namespace ComGraph_Lab_5
                 { 0, 0, -1, 0 },
                 { 0, 0, 0, 1 }
             };
-
             points.dot(reflectMatrix);
         }
 
@@ -339,6 +297,37 @@ namespace ComGraph_Lab_5
         #endregion
 
         #region проекции
+
+        private void makePerspective()
+        {
+            setFaces();
+            if (directP)
+            {
+                apply_DirectPerspective();
+                return;
+            }
+            if (onePointP)
+            {
+                apply_OnePointPerspective();
+                return;
+            }
+            if (kavalieP)
+            {
+                apply_KavaliePerspective();
+                return;
+            }
+            if (kabineP)
+            {
+                apply_KabinePerspective();
+                return;
+            }
+            if (ortoP)
+            {
+                apply_OrtoPerspective();
+                return;
+            }
+        }
+
         private void offCheckedPerspective()
         {
             directP = false;
@@ -348,13 +337,19 @@ namespace ComGraph_Lab_5
             ortoP = false;
         }
 
-        public PointF[,] getFacesPerspective()
+        private void set2DFaces(VectorF3D[] faces, float[,] perspectiveMatrix)
         {
-            makePerspective();
-            return faces2D;
+            for (int i = 0; i < 6; ++i)
+            {
+                faces[i].dot(perspectiveMatrix);
+                for (int j = 0; j < 4; ++j)
+                {
+                    faces2D[i, j] = faces[i].getPoint2D()[j];
+                }
+            }
         }
 
-        public void apply_DirectPerspective()
+        private void applyPerspective(float[,] perspectiveMatrix)
         {
             faces2D = new PointF[6, 4];
             VectorF3D[] newFaces = new VectorF3D[6];
@@ -362,75 +357,41 @@ namespace ComGraph_Lab_5
             {
                 newFaces[i] = faces[i].Clone();
             }
+            set2DFaces(newFaces, perspectiveMatrix);
+        }
 
-            float[,] moveMatrix = new float[,] {
+        public void apply_DirectPerspective()
+        {
+            float[,] perspectiveMatrix = new float[,] {
                 { 1, 0, 0, 0 },
                 { 0, 1, 0, 0 },
                 { 0, 0, 0, 0 },
                 { 0, 0, 0, 1 }
             };
-
-            for (int i = 0; i < 6; ++i)
-            {
-                newFaces[i].dot(moveMatrix);
-                for (int j = 0; j < 4; ++j)
-                {
-                    faces2D[i, j] = newFaces[i].getPoint2D()[j];
-                }
-            }
+            applyPerspective(perspectiveMatrix);
         }
         public void apply_OnePointPerspective()
         {
-            faces2D = new PointF[6, 4];
-            VectorF3D[] newFaces = new VectorF3D[6];
-            for (int i = 0; i < 6; ++i)
-            {
-                newFaces[i] = faces[i].Clone();
-            }
-            float r = 0.001f;
-
-            float[,] moveMatrix = new float[,] {
+            float r = -0.001f;
+            float[,] perspectiveMatrix = new float[,] {
                 { 1, 0, 0, 0 },
                 { 0, 1, 0, 0 },
-                { 0, 0, 20, r },
+                { 0, 0, 0, r },
                 { 0, 0, 0, 1 }
             };
-
-            for (int i = 0; i < 6; ++i)
-            {
-                newFaces[i].dot(moveMatrix);
-                for (int j = 0; j < 4; ++j)
-                {
-                    faces2D[i, j] = newFaces[i].getPoint2D()[j];
-                }
-            }
+            applyPerspective(perspectiveMatrix);
         }
 
         // косоугольные проекции
         public void apply_ObliquePerspective(float l, float alpha)
         {
-            faces2D = new PointF[6, 4];
-            VectorF3D[] newFaces = new VectorF3D[6];
-            for (int i = 0; i < 6; ++i)
-            {
-                newFaces[i] = faces[i].Clone();
-            }
-
-            float[,] moveMatrix = new float[,] {
+            float[,] perspectiveMatrix = new float[,] {
                 { 1, 0, 0, 0 },
                 { 0, 1, 0, 0 },
                 {l * (float)Math.Cos(alpha), l * (float)Math.Sin(alpha), 0, 0 },
                 { 0, 0, 0, 1 }
             };
-
-            for (int i = 0; i < 6; ++i)
-            {
-                newFaces[i].dot(moveMatrix);
-                for (int j = 0; j < 4; ++j)
-                {
-                    faces2D[i, j] = newFaces[i].getPoint2D()[j];
-                }
-            }
+            applyPerspective(perspectiveMatrix);
         }
         public void apply_KavaliePerspective()
         {
@@ -450,8 +411,6 @@ namespace ComGraph_Lab_5
             float alpha = (float)Math.PI / 2.0f;
             apply_ObliquePerspective(l, alpha);
         }
-
-
 
         public void set_DirectPerspective()
         {
@@ -480,15 +439,25 @@ namespace ComGraph_Lab_5
             ortoP = true;
         }
 
+        public PointF[,] getFacesPerspective()
+        {
+            makePerspective();
+            return faces2D;
+        }
+
         #endregion
+
 
         public int  getNimberOfVertix()
         {
             return NUMBER_OF_VERTIX;
         }
 
+
+        #region переменные
         private VectorF3D points;
         private VectorF3D defaultPoints;
+
         private PointF[,] faces2D;
 
         bool directP = true;
@@ -498,6 +467,7 @@ namespace ComGraph_Lab_5
         bool ortoP = false;
 
         VectorF3D[] faces = new VectorF3D[6];
+        #endregion
     }
 
 }

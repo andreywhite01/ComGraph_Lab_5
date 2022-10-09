@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ComGraph_Lab_5
 {
@@ -31,20 +32,29 @@ namespace ComGraph_Lab_5
             Graphics g = e.Graphics;
             
             g.TranslateTransform(((PictureBox)sender).Width / 2.0f, ((PictureBox)sender).Height / 2.0f);
-
-            PointF[,] faces = fig.getFacesPerspective();
-
-            for (int i = 0; i < 6; ++i)
+            // рисуем фигуру
             {
-                for (int j = 0; j < 3; ++j)
+                PointF[,] faces = fig.getFacesPerspective();
+
+                for (int i = 0; i < 6; ++i)
                 {
-                    g.DrawLine(new Pen(Color.Black), faces[i, j], faces[i, j + 1]);
+                    for (int j = 0; j < 3; ++j)
+                    {
+                        g.DrawLine(new Pen(Color.Black, 2), faces[i, j], faces[i, j + 1]);
+                    }
+                    g.DrawLine(new Pen(Color.Black, 2), faces[i, 3], faces[i, 0]);
                 }
-                g.DrawLine(new Pen(Color.Black), faces[i, 3], faces[i, 0]);
             }
-            //fig.resetTransform();
+            // рисуем оси проекции (при проекии на плоскость XOY ось OZ не видна)
+            {
+                PointF[] axes = { new PointF(0,0), new PointF(100,0), new PointF(0,100) };
+
+                g.DrawLine(new Pen(Color.Green, 3), axes[0], axes[1]);
+                g.DrawLine(new Pen(Color.Red, 3), axes[0], axes[2]);
+            }
         }
 
+        // вспомогающая функция для веделения чисел из TextBox
         float getFloat(String text)
         {
             text = text.Replace('.', ',');
@@ -54,6 +64,7 @@ namespace ComGraph_Lab_5
             return value;
         }
 
+        #region операции над фигурой
         private void rotate(char axis, TextBox tb)
         {
             float angle;
@@ -89,12 +100,15 @@ namespace ComGraph_Lab_5
                 pictureBox1.Image = null;
             }
         }
+
         private void reflect(char axis)
         {
             fig.reflect(axis);
             pictureBox1.Image = null;
         }
+        #endregion
 
+        #region кнопки управления
         private void btn_rotate_x_Click(object sender, EventArgs e)
         {
             rotate('x', tb_angle_x);
@@ -159,19 +173,9 @@ namespace ComGraph_Lab_5
         {
             reflect('z');
         }
+        #endregion
 
-        private void offCheckedPerspective()
-        {
-            Direct_ToolStripMenuItem.Checked = false;
-            OnePoint_ToolStripMenuItem.Checked = false;
-            Oblique_ToolStripMenuItem.Checked = false;
-            Kavalie_ToolStripMenuItem.Checked = false;
-            Kabine_ToolStripMenuItem.Checked = false;
-            Orto_ToolStripMenuItem.Checked = false;
-
-            pictureBox1.Image = null;
-        }
-
+        #region настройка проекций
         private void DirectPerspective_Click(object sender, EventArgs e)
         {
             fig.set_DirectPerspective();
@@ -215,6 +219,33 @@ namespace ComGraph_Lab_5
             offCheckedPerspective();
             Oblique_ToolStripMenuItem.Checked = true;
             Orto_ToolStripMenuItem.Checked = true;
+        }
+        #endregion
+
+        // отключить выбранную проекцию
+        private void offCheckedPerspective()
+        {
+            Direct_ToolStripMenuItem.Checked = false;
+            OnePoint_ToolStripMenuItem.Checked = false;
+            Oblique_ToolStripMenuItem.Checked = false;
+            Kavalie_ToolStripMenuItem.Checked = false;
+            Kabine_ToolStripMenuItem.Checked = false;
+            Orto_ToolStripMenuItem.Checked = false;
+
+            pictureBox1.Image = null;
+        }
+
+        // закрыть программу
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        // сброс к начальным настройкам
+        private void toDefaultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fig.setDefault();
+            pictureBox1.Image = null;
         }
     }
 

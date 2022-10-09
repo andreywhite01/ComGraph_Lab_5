@@ -53,6 +53,11 @@ namespace ComGraph_Lab_5
             return new PointF3D(a.x / b, a.y / b, a.z / b, a.h / b);
         }
 
+        public static PointF3D operator *(PointF3D a, float b)
+        {
+            return new PointF3D(a.x * b, a.y * b, a.z * b, a.h);
+        }
+
         public float this[int index]
         {
             get
@@ -176,6 +181,20 @@ namespace ComGraph_Lab_5
             {
                 vector[index] = value;
             }
+        }
+
+        public static VectorF3D operator *(VectorF3D a, float b)
+        {
+            PointF3D[] newPoints = new PointF3D[a.Length];
+
+            for (int i = 0; i < a.Length; ++i)
+            {
+                newPoints[i] = a[i].Clone() * b;
+            }
+
+            VectorF3D newVector = new VectorF3D(newPoints);
+
+            return newVector;
         }
 
         // сскалярное умножение

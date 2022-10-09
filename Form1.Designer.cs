@@ -33,7 +33,6 @@ namespace ComGraph_Lab_5
             this.btn_rotate_y = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сброситьИзмененияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.закрытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,30 +103,25 @@ namespace ComGraph_Lab_5
             // файлToolStripMenuItem
             // 
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.сохранитьToolStripMenuItem,
             this.сброситьИзмененияToolStripMenuItem,
             this.закрытьToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
-            // сохранитьToolStripMenuItem
-            // 
-            this.сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
-            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.сохранитьToolStripMenuItem.Text = "Сохранить";
-            // 
             // сброситьИзмененияToolStripMenuItem
             // 
             this.сброситьИзмененияToolStripMenuItem.Name = "сброситьИзмененияToolStripMenuItem";
             this.сброситьИзмененияToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.сброситьИзмененияToolStripMenuItem.Text = "Сбросить изменения";
+            this.сброситьИзмененияToolStripMenuItem.Click += new System.EventHandler(this.toDefaultToolStripMenuItem_Click);
             // 
             // закрытьToolStripMenuItem
             // 
             this.закрытьToolStripMenuItem.Name = "закрытьToolStripMenuItem";
             this.закрытьToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.закрытьToolStripMenuItem.Text = "Закрыть";
+            this.закрытьToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -144,14 +138,14 @@ namespace ComGraph_Lab_5
             this.Direct_ToolStripMenuItem.Checked = true;
             this.Direct_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Direct_ToolStripMenuItem.Name = "Direct_ToolStripMenuItem";
-            this.Direct_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Direct_ToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.Direct_ToolStripMenuItem.Text = "Прямоугольная";
             this.Direct_ToolStripMenuItem.Click += new System.EventHandler(this.DirectPerspective_Click);
             // 
             // OnePoint_ToolStripMenuItem
             // 
             this.OnePoint_ToolStripMenuItem.Name = "OnePoint_ToolStripMenuItem";
-            this.OnePoint_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.OnePoint_ToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.OnePoint_ToolStripMenuItem.Text = "Одноточечная";
             this.OnePoint_ToolStripMenuItem.Click += new System.EventHandler(this.OnePointPerspective_Click);
             // 
@@ -162,7 +156,7 @@ namespace ComGraph_Lab_5
             this.Kabine_ToolStripMenuItem,
             this.Orto_ToolStripMenuItem});
             this.Oblique_ToolStripMenuItem.Name = "Oblique_ToolStripMenuItem";
-            this.Oblique_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Oblique_ToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.Oblique_ToolStripMenuItem.Text = "Косоугольная";
             // 
             // Kavalie_ToolStripMenuItem
@@ -453,7 +447,6 @@ namespace ComGraph_Lab_5
         private System.Windows.Forms.Button btn_move_z;
         private System.Windows.Forms.Button btn_move_x;
         private System.Windows.Forms.Button btn_move_y;
-        private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сброситьИзмененияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem закрытьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OnePoint_ToolStripMenuItem;
