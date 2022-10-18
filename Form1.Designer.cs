@@ -29,8 +29,6 @@ namespace ComGraph_Lab_5
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btn_rotate_y = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сброситьИзмененияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,50 +41,33 @@ namespace ComGraph_Lab_5
             this.Kabine_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Orto_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_rotate_x = new System.Windows.Forms.Button();
-            this.btn_rotate_z = new System.Windows.Forms.Button();
             this.tb_angle_x = new System.Windows.Forms.TextBox();
             this.tb_angle_y = new System.Windows.Forms.TextBox();
             this.tb_angle_z = new System.Windows.Forms.TextBox();
             this.tb_step_z = new System.Windows.Forms.TextBox();
             this.tb_step_y = new System.Windows.Forms.TextBox();
             this.tb_step_x = new System.Windows.Forms.TextBox();
-            this.btn_move_z = new System.Windows.Forms.Button();
-            this.btn_move_x = new System.Windows.Forms.Button();
-            this.btn_move_y = new System.Windows.Forms.Button();
             this.btn_reflect_x = new System.Windows.Forms.Button();
             this.btn_reflect_y = new System.Windows.Forms.Button();
             this.btn_reflect_z = new System.Windows.Forms.Button();
             this.tb_scale_z = new System.Windows.Forms.TextBox();
             this.tb_scale_y = new System.Windows.Forms.TextBox();
             this.tb_scale_x = new System.Windows.Forms.TextBox();
+            this.tb_scale_all = new System.Windows.Forms.TextBox();
+            this.btn_scale_all = new System.Windows.Forms.Button();
             this.btn_scale_z = new System.Windows.Forms.Button();
             this.btn_scale_x = new System.Windows.Forms.Button();
             this.btn_scale_y = new System.Windows.Forms.Button();
-            this.tb_scale_all = new System.Windows.Forms.TextBox();
-            this.btn_scale_all = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.btn_move_z = new System.Windows.Forms.Button();
+            this.btn_move_x = new System.Windows.Forms.Button();
+            this.btn_move_y = new System.Windows.Forms.Button();
+            this.btn_rotate_z = new System.Windows.Forms.Button();
+            this.btn_rotate_x = new System.Windows.Forms.Button();
+            this.btn_rotate_y = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(12, 27);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(500, 500);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
-            // 
-            // btn_rotate_y
-            // 
-            this.btn_rotate_y.Location = new System.Drawing.Point(601, 83);
-            this.btn_rotate_y.Name = "btn_rotate_y";
-            this.btn_rotate_y.Size = new System.Drawing.Size(75, 23);
-            this.btn_rotate_y.TabIndex = 1;
-            this.btn_rotate_y.Text = "rotate y";
-            this.btn_rotate_y.UseVisualStyleBackColor = true;
-            this.btn_rotate_y.Click += new System.EventHandler(this.btn_rotate_y_Click);
             // 
             // menuStrip1
             // 
@@ -185,30 +166,11 @@ namespace ComGraph_Lab_5
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(68, 20);
             this.toolStripMenuItem2.Text = "Помощь";
-            // 
-            // btn_rotate_x
-            // 
-            this.btn_rotate_x.Location = new System.Drawing.Point(601, 54);
-            this.btn_rotate_x.Name = "btn_rotate_x";
-            this.btn_rotate_x.Size = new System.Drawing.Size(75, 23);
-            this.btn_rotate_x.TabIndex = 3;
-            this.btn_rotate_x.Text = "rotate x";
-            this.btn_rotate_x.UseVisualStyleBackColor = true;
-            this.btn_rotate_x.Click += new System.EventHandler(this.btn_rotate_x_Click);
-            // 
-            // btn_rotate_z
-            // 
-            this.btn_rotate_z.Location = new System.Drawing.Point(601, 112);
-            this.btn_rotate_z.Name = "btn_rotate_z";
-            this.btn_rotate_z.Size = new System.Drawing.Size(75, 23);
-            this.btn_rotate_z.TabIndex = 4;
-            this.btn_rotate_z.Text = "rotate z";
-            this.btn_rotate_z.UseVisualStyleBackColor = true;
-            this.btn_rotate_z.Click += new System.EventHandler(this.btn_rotate_z_Click);
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // tb_angle_x
             // 
-            this.tb_angle_x.Location = new System.Drawing.Point(535, 54);
+            this.tb_angle_x.Location = new System.Drawing.Point(535, 43);
             this.tb_angle_x.Name = "tb_angle_x";
             this.tb_angle_x.Size = new System.Drawing.Size(60, 20);
             this.tb_angle_x.TabIndex = 5;
@@ -216,7 +178,7 @@ namespace ComGraph_Lab_5
             // 
             // tb_angle_y
             // 
-            this.tb_angle_y.Location = new System.Drawing.Point(535, 83);
+            this.tb_angle_y.Location = new System.Drawing.Point(591, 83);
             this.tb_angle_y.Name = "tb_angle_y";
             this.tb_angle_y.Size = new System.Drawing.Size(60, 20);
             this.tb_angle_y.TabIndex = 6;
@@ -224,7 +186,7 @@ namespace ComGraph_Lab_5
             // 
             // tb_angle_z
             // 
-            this.tb_angle_z.Location = new System.Drawing.Point(535, 112);
+            this.tb_angle_z.Location = new System.Drawing.Point(535, 125);
             this.tb_angle_z.Name = "tb_angle_z";
             this.tb_angle_z.Size = new System.Drawing.Size(60, 20);
             this.tb_angle_z.TabIndex = 7;
@@ -232,7 +194,7 @@ namespace ComGraph_Lab_5
             // 
             // tb_step_z
             // 
-            this.tb_step_z.Location = new System.Drawing.Point(535, 230);
+            this.tb_step_z.Location = new System.Drawing.Point(647, 245);
             this.tb_step_z.Name = "tb_step_z";
             this.tb_step_z.Size = new System.Drawing.Size(60, 20);
             this.tb_step_z.TabIndex = 13;
@@ -240,7 +202,7 @@ namespace ComGraph_Lab_5
             // 
             // tb_step_y
             // 
-            this.tb_step_y.Location = new System.Drawing.Point(535, 201);
+            this.tb_step_y.Location = new System.Drawing.Point(703, 203);
             this.tb_step_y.Name = "tb_step_y";
             this.tb_step_y.Size = new System.Drawing.Size(60, 20);
             this.tb_step_y.TabIndex = 12;
@@ -248,75 +210,48 @@ namespace ComGraph_Lab_5
             // 
             // tb_step_x
             // 
-            this.tb_step_x.Location = new System.Drawing.Point(535, 172);
+            this.tb_step_x.Location = new System.Drawing.Point(647, 163);
             this.tb_step_x.Name = "tb_step_x";
             this.tb_step_x.Size = new System.Drawing.Size(60, 20);
             this.tb_step_x.TabIndex = 11;
             this.tb_step_x.Text = "10";
             // 
-            // btn_move_z
-            // 
-            this.btn_move_z.Location = new System.Drawing.Point(601, 230);
-            this.btn_move_z.Name = "btn_move_z";
-            this.btn_move_z.Size = new System.Drawing.Size(75, 23);
-            this.btn_move_z.TabIndex = 10;
-            this.btn_move_z.Text = "move z";
-            this.btn_move_z.UseVisualStyleBackColor = true;
-            this.btn_move_z.Click += new System.EventHandler(this.btn_move_z_Click);
-            // 
-            // btn_move_x
-            // 
-            this.btn_move_x.Location = new System.Drawing.Point(601, 172);
-            this.btn_move_x.Name = "btn_move_x";
-            this.btn_move_x.Size = new System.Drawing.Size(75, 23);
-            this.btn_move_x.TabIndex = 9;
-            this.btn_move_x.Text = "move x";
-            this.btn_move_x.UseVisualStyleBackColor = true;
-            this.btn_move_x.Click += new System.EventHandler(this.btn_move_x_Click);
-            // 
-            // btn_move_y
-            // 
-            this.btn_move_y.Location = new System.Drawing.Point(601, 201);
-            this.btn_move_y.Name = "btn_move_y";
-            this.btn_move_y.Size = new System.Drawing.Size(75, 23);
-            this.btn_move_y.TabIndex = 8;
-            this.btn_move_y.Text = "move y";
-            this.btn_move_y.UseVisualStyleBackColor = true;
-            this.btn_move_y.Click += new System.EventHandler(this.btn_move_y_Click);
-            // 
             // btn_reflect_x
             // 
-            this.btn_reflect_x.Location = new System.Drawing.Point(535, 419);
+            this.btn_reflect_x.BackgroundImage = global::ComGraph_Lab_5.Properties.Resources.reflectX;
+            this.btn_reflect_x.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_reflect_x.Location = new System.Drawing.Point(601, 489);
             this.btn_reflect_x.Name = "btn_reflect_x";
-            this.btn_reflect_x.Size = new System.Drawing.Size(75, 23);
+            this.btn_reflect_x.Size = new System.Drawing.Size(50, 50);
             this.btn_reflect_x.TabIndex = 14;
-            this.btn_reflect_x.Text = "reflect x";
             this.btn_reflect_x.UseVisualStyleBackColor = true;
             this.btn_reflect_x.Click += new System.EventHandler(this.btn_reflect_x_Click);
             // 
             // btn_reflect_y
             // 
-            this.btn_reflect_y.Location = new System.Drawing.Point(535, 448);
+            this.btn_reflect_y.BackgroundImage = global::ComGraph_Lab_5.Properties.Resources.reflectY;
+            this.btn_reflect_y.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_reflect_y.Location = new System.Drawing.Point(657, 489);
             this.btn_reflect_y.Name = "btn_reflect_y";
-            this.btn_reflect_y.Size = new System.Drawing.Size(75, 23);
+            this.btn_reflect_y.Size = new System.Drawing.Size(50, 50);
             this.btn_reflect_y.TabIndex = 15;
-            this.btn_reflect_y.Text = "reflect y";
             this.btn_reflect_y.UseVisualStyleBackColor = true;
             this.btn_reflect_y.Click += new System.EventHandler(this.btn_reflect_y_Click);
             // 
             // btn_reflect_z
             // 
-            this.btn_reflect_z.Location = new System.Drawing.Point(535, 477);
+            this.btn_reflect_z.BackgroundImage = global::ComGraph_Lab_5.Properties.Resources.reflectZ;
+            this.btn_reflect_z.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_reflect_z.Location = new System.Drawing.Point(713, 489);
             this.btn_reflect_z.Name = "btn_reflect_z";
-            this.btn_reflect_z.Size = new System.Drawing.Size(75, 23);
+            this.btn_reflect_z.Size = new System.Drawing.Size(50, 50);
             this.btn_reflect_z.TabIndex = 16;
-            this.btn_reflect_z.Text = "reflect z";
             this.btn_reflect_z.UseVisualStyleBackColor = true;
             this.btn_reflect_z.Click += new System.EventHandler(this.btn_reflect_z_Click);
             // 
             // tb_scale_z
             // 
-            this.tb_scale_z.Location = new System.Drawing.Point(535, 342);
+            this.tb_scale_z.Location = new System.Drawing.Point(535, 369);
             this.tb_scale_z.Name = "tb_scale_z";
             this.tb_scale_z.Size = new System.Drawing.Size(60, 20);
             this.tb_scale_z.TabIndex = 22;
@@ -324,7 +259,7 @@ namespace ComGraph_Lab_5
             // 
             // tb_scale_y
             // 
-            this.tb_scale_y.Location = new System.Drawing.Point(535, 313);
+            this.tb_scale_y.Location = new System.Drawing.Point(591, 327);
             this.tb_scale_y.Name = "tb_scale_y";
             this.tb_scale_y.Size = new System.Drawing.Size(60, 20);
             this.tb_scale_y.TabIndex = 21;
@@ -332,45 +267,15 @@ namespace ComGraph_Lab_5
             // 
             // tb_scale_x
             // 
-            this.tb_scale_x.Location = new System.Drawing.Point(535, 284);
+            this.tb_scale_x.Location = new System.Drawing.Point(535, 287);
             this.tb_scale_x.Name = "tb_scale_x";
             this.tb_scale_x.Size = new System.Drawing.Size(60, 20);
             this.tb_scale_x.TabIndex = 20;
             this.tb_scale_x.Text = "1.1";
             // 
-            // btn_scale_z
-            // 
-            this.btn_scale_z.Location = new System.Drawing.Point(601, 342);
-            this.btn_scale_z.Name = "btn_scale_z";
-            this.btn_scale_z.Size = new System.Drawing.Size(75, 23);
-            this.btn_scale_z.TabIndex = 19;
-            this.btn_scale_z.Text = "scale z";
-            this.btn_scale_z.UseVisualStyleBackColor = true;
-            this.btn_scale_z.Click += new System.EventHandler(this.btn_scale_z_Click);
-            // 
-            // btn_scale_x
-            // 
-            this.btn_scale_x.Location = new System.Drawing.Point(601, 284);
-            this.btn_scale_x.Name = "btn_scale_x";
-            this.btn_scale_x.Size = new System.Drawing.Size(75, 23);
-            this.btn_scale_x.TabIndex = 18;
-            this.btn_scale_x.Text = "scale x";
-            this.btn_scale_x.UseVisualStyleBackColor = true;
-            this.btn_scale_x.Click += new System.EventHandler(this.btn_scale_x_Click);
-            // 
-            // btn_scale_y
-            // 
-            this.btn_scale_y.Location = new System.Drawing.Point(601, 313);
-            this.btn_scale_y.Name = "btn_scale_y";
-            this.btn_scale_y.Size = new System.Drawing.Size(75, 23);
-            this.btn_scale_y.TabIndex = 17;
-            this.btn_scale_y.Text = "scale y";
-            this.btn_scale_y.UseVisualStyleBackColor = true;
-            this.btn_scale_y.Click += new System.EventHandler(this.btn_scale_y_Click);
-            // 
             // tb_scale_all
             // 
-            this.tb_scale_all.Location = new System.Drawing.Point(535, 371);
+            this.tb_scale_all.Location = new System.Drawing.Point(591, 412);
             this.tb_scale_all.Name = "tb_scale_all";
             this.tb_scale_all.Size = new System.Drawing.Size(60, 20);
             this.tb_scale_all.TabIndex = 24;
@@ -378,19 +283,131 @@ namespace ComGraph_Lab_5
             // 
             // btn_scale_all
             // 
-            this.btn_scale_all.Location = new System.Drawing.Point(601, 371);
+            this.btn_scale_all.BackgroundImage = global::ComGraph_Lab_5.Properties.Resources.scale;
+            this.btn_scale_all.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_scale_all.Location = new System.Drawing.Point(657, 396);
             this.btn_scale_all.Name = "btn_scale_all";
-            this.btn_scale_all.Size = new System.Drawing.Size(75, 23);
+            this.btn_scale_all.Size = new System.Drawing.Size(50, 50);
             this.btn_scale_all.TabIndex = 23;
-            this.btn_scale_all.Text = "scale all";
             this.btn_scale_all.UseVisualStyleBackColor = true;
             this.btn_scale_all.Click += new System.EventHandler(this.btn_scale_all_Click);
+            // 
+            // btn_scale_z
+            // 
+            this.btn_scale_z.BackgroundImage = global::ComGraph_Lab_5.Properties.Resources.scaleZ;
+            this.btn_scale_z.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_scale_z.Location = new System.Drawing.Point(601, 353);
+            this.btn_scale_z.Name = "btn_scale_z";
+            this.btn_scale_z.Size = new System.Drawing.Size(50, 50);
+            this.btn_scale_z.TabIndex = 19;
+            this.btn_scale_z.UseVisualStyleBackColor = true;
+            this.btn_scale_z.Click += new System.EventHandler(this.btn_scale_z_Click);
+            // 
+            // btn_scale_x
+            // 
+            this.btn_scale_x.BackgroundImage = global::ComGraph_Lab_5.Properties.Resources.scaleX;
+            this.btn_scale_x.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_scale_x.Location = new System.Drawing.Point(601, 271);
+            this.btn_scale_x.Name = "btn_scale_x";
+            this.btn_scale_x.Size = new System.Drawing.Size(50, 50);
+            this.btn_scale_x.TabIndex = 18;
+            this.btn_scale_x.UseVisualStyleBackColor = true;
+            this.btn_scale_x.Click += new System.EventHandler(this.btn_scale_x_Click);
+            // 
+            // btn_scale_y
+            // 
+            this.btn_scale_y.BackgroundImage = global::ComGraph_Lab_5.Properties.Resources.scaleY;
+            this.btn_scale_y.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_scale_y.Location = new System.Drawing.Point(657, 311);
+            this.btn_scale_y.Name = "btn_scale_y";
+            this.btn_scale_y.Size = new System.Drawing.Size(50, 50);
+            this.btn_scale_y.TabIndex = 17;
+            this.btn_scale_y.UseVisualStyleBackColor = true;
+            this.btn_scale_y.Click += new System.EventHandler(this.btn_scale_y_Click);
+            // 
+            // btn_move_z
+            // 
+            this.btn_move_z.BackgroundImage = global::ComGraph_Lab_5.Properties.Resources.moveZ;
+            this.btn_move_z.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_move_z.Location = new System.Drawing.Point(713, 229);
+            this.btn_move_z.Name = "btn_move_z";
+            this.btn_move_z.Size = new System.Drawing.Size(50, 50);
+            this.btn_move_z.TabIndex = 10;
+            this.btn_move_z.UseVisualStyleBackColor = true;
+            this.btn_move_z.Click += new System.EventHandler(this.btn_move_z_Click);
+            // 
+            // btn_move_x
+            // 
+            this.btn_move_x.BackgroundImage = global::ComGraph_Lab_5.Properties.Resources.moveX;
+            this.btn_move_x.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_move_x.Location = new System.Drawing.Point(713, 147);
+            this.btn_move_x.Name = "btn_move_x";
+            this.btn_move_x.Size = new System.Drawing.Size(50, 50);
+            this.btn_move_x.TabIndex = 9;
+            this.btn_move_x.UseVisualStyleBackColor = true;
+            this.btn_move_x.Click += new System.EventHandler(this.btn_move_x_Click);
+            // 
+            // btn_move_y
+            // 
+            this.btn_move_y.BackgroundImage = global::ComGraph_Lab_5.Properties.Resources.moveY;
+            this.btn_move_y.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_move_y.Location = new System.Drawing.Point(769, 187);
+            this.btn_move_y.Name = "btn_move_y";
+            this.btn_move_y.Size = new System.Drawing.Size(50, 50);
+            this.btn_move_y.TabIndex = 8;
+            this.btn_move_y.UseVisualStyleBackColor = true;
+            this.btn_move_y.Click += new System.EventHandler(this.btn_move_y_Click);
+            // 
+            // btn_rotate_z
+            // 
+            this.btn_rotate_z.BackgroundImage = global::ComGraph_Lab_5.Properties.Resources.rotateZ;
+            this.btn_rotate_z.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_rotate_z.Location = new System.Drawing.Point(601, 109);
+            this.btn_rotate_z.Name = "btn_rotate_z";
+            this.btn_rotate_z.Size = new System.Drawing.Size(50, 50);
+            this.btn_rotate_z.TabIndex = 4;
+            this.btn_rotate_z.UseVisualStyleBackColor = true;
+            this.btn_rotate_z.Click += new System.EventHandler(this.btn_rotate_z_Click);
+            // 
+            // btn_rotate_x
+            // 
+            this.btn_rotate_x.BackgroundImage = global::ComGraph_Lab_5.Properties.Resources.rotateX;
+            this.btn_rotate_x.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_rotate_x.Location = new System.Drawing.Point(601, 27);
+            this.btn_rotate_x.Name = "btn_rotate_x";
+            this.btn_rotate_x.Size = new System.Drawing.Size(50, 50);
+            this.btn_rotate_x.TabIndex = 3;
+            this.btn_rotate_x.UseVisualStyleBackColor = true;
+            this.btn_rotate_x.Click += new System.EventHandler(this.btn_rotate_x_Click);
+            // 
+            // btn_rotate_y
+            // 
+            this.btn_rotate_y.BackgroundImage = global::ComGraph_Lab_5.Properties.Resources.rotateY;
+            this.btn_rotate_y.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_rotate_y.Location = new System.Drawing.Point(657, 67);
+            this.btn_rotate_y.Name = "btn_rotate_y";
+            this.btn_rotate_y.Size = new System.Drawing.Size(50, 50);
+            this.btn_rotate_y.TabIndex = 1;
+            this.btn_rotate_y.UseVisualStyleBackColor = true;
+            this.btn_rotate_y.Click += new System.EventHandler(this.btn_rotate_y_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(12, 27);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(500, 500);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_LKMDown);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_LKMMove);
+            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_LKMUp);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(827, 623);
+            this.ClientSize = new System.Drawing.Size(827, 573);
             this.Controls.Add(this.tb_scale_all);
             this.Controls.Add(this.btn_scale_all);
             this.Controls.Add(this.tb_scale_z);
@@ -420,9 +437,9 @@ namespace ComGraph_Lab_5
             this.Name = "Form1";
             this.Text = "Лабораторная работа №5";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

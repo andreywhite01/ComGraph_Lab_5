@@ -14,47 +14,49 @@ namespace ComGraph_Lab_5
 
     public partial class Form1 : Form
     {
-        Figure fig = new Figure();
-
+        Figure fig;
         public Form1()
         {
             InitializeComponent();
+            KeyPreview = true;
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            fig = new Figure();
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            
             Graphics g = e.Graphics;
-            
+
+            // перемещаем точку начала координат в центр PictureBox
             g.TranslateTransform(((PictureBox)sender).Width / 2.0f, ((PictureBox)sender).Height / 2.0f);
-            // рисуем фигуру
-            {
-                PointF[,] faces = fig.getFacesPerspective();
 
-                for (int i = 0; i < 6; ++i)
-                {
-                    for (int j = 0; j < 3; ++j)
-                    {
-                        g.DrawLine(new Pen(Color.Black, 2), faces[i, j], faces[i, j + 1]);
-                    }
-                    g.DrawLine(new Pen(Color.Black, 2), faces[i, 3], faces[i, 0]);
-                }
-            }
-            // рисуем оси проекции (при проекии на плоскость XOY ось OZ не видна)
-            {
-                PointF[] axes = { new PointF(0,0), new PointF(100,0), new PointF(0,100) };
-
-                g.DrawLine(new Pen(Color.Green, 3), axes[0], axes[1]);
-                g.DrawLine(new Pen(Color.Red, 3), axes[0], axes[2]);
-            }
+            drawFigure(g, fig);
+            drawAxes(g);
         }
 
-        // вспомогающая функция для веделения чисел из TextBox
+        void drawFigure(Graphics g, Figure fig)
+        {
+            PointF[,] faces = fig.getFacesPerspective();
+            for (int i = 0; i < 6; ++i)
+            {
+                for (int j = 0; j < 3; ++j)
+                {
+                    g.DrawLine(new Pen(Color.Black, 2), faces[i, j], faces[i, j + 1]);
+                }
+                g.DrawLine(new Pen(Color.Black, 2), faces[i, 3], faces[i, 0]);
+            }
+        }
+        void drawAxes(Graphics g)
+        {
+            // рисуем оси проекции (при проекии на плоскость XOY ось OZ не видна)
+            PointF[] axes = { new PointF(0, 0), new PointF(100, 0), new PointF(0, 100) };
+            g.DrawLine(new Pen(Color.Red, 3), axes[0], axes[1]);
+            g.DrawLine(new Pen(Color.Green, 3), axes[0], axes[2]);
+        }
+
+        // вспомогающая функция для получения чисел из TextBox
         float getFloat(String text)
         {
             text = text.Replace('.', ',');
@@ -184,7 +186,6 @@ namespace ComGraph_Lab_5
             Direct_ToolStripMenuItem.Checked = true;
 
         }
-
         private void OnePointPerspective_Click(object sender, EventArgs e)
         {
             fig.set_OnePointPerspective();
@@ -193,7 +194,6 @@ namespace ComGraph_Lab_5
             OnePoint_ToolStripMenuItem.Checked = true;
 
         }
-
         private void Kavalie_Click(object sender, EventArgs e)
         {
             fig.set_KavaliePerspective();
@@ -202,7 +202,6 @@ namespace ComGraph_Lab_5
             Oblique_ToolStripMenuItem.Checked = true;
             Kavalie_ToolStripMenuItem.Checked = true;
         }
-
         private void Kabine_Click(object sender, EventArgs e)
         {
             fig.set_KabinePerspective();
@@ -211,7 +210,6 @@ namespace ComGraph_Lab_5
             Oblique_ToolStripMenuItem.Checked = true;
             Kabine_ToolStripMenuItem.Checked = true;
         }
-
         private void Orto_Click(object sender, EventArgs e)
         {
             fig.set_OrtoPerspective();
@@ -220,8 +218,6 @@ namespace ComGraph_Lab_5
             Oblique_ToolStripMenuItem.Checked = true;
             Orto_ToolStripMenuItem.Checked = true;
         }
-        #endregion
-
         // отключить выбранную проекцию
         private void offCheckedPerspective()
         {
@@ -234,7 +230,87 @@ namespace ComGraph_Lab_5
 
             pictureBox1.Image = null;
         }
+        #endregion
 
+        #region обработчики горячих клавиш
+        // переменные для отслеживания состояния мыши
+        bool isLKM_Down = false;
+        Point startMouseCoordinates;
+        Point mouseCoordinates;
+
+        protected override bool ProcessCmdKey(ref Message message, Keys keyData)
+        {
+            // вращение
+            if (keyData == (Keys.R))
+            {
+                float angleX = (startMouseCoordinates.Y - mouseCoordinates.Y) / 100.0f;
+                float angleY = (startMouseCoordinates.X - mouseCoordinates.X) / 100.0f;
+
+                fig.rotate('x', angleX);
+                fig.rotate('y', -angleY);
+
+                startMouseCoordinates = new Point(mouseCoordinates.X, mouseCoordinates.Y);
+
+                pictureBox1.Image = null;
+            }
+            // перемещение
+            if (keyData == (Keys.M))
+            {
+                float stepX = (startMouseCoordinates.Y - mouseCoordinates.Y) / 1.0f;
+                float stepY = (startMouseCoordinates.X - mouseCoordinates.X) / 1.0f;
+
+                fig.move('x', -stepY);
+                fig.move('y', -stepX);
+
+                startMouseCoordinates = new Point(mouseCoordinates.X, mouseCoordinates.Y);
+
+                pictureBox1.Image = null;
+            }
+            // масштабирование
+            if (keyData == (Keys.S))
+            {
+                float kX = 1 + (startMouseCoordinates.Y - mouseCoordinates.Y) / 500.0f;
+                float kY = 1 - (startMouseCoordinates.X - mouseCoordinates.X) / 500.0f;
+
+                fig.scale('x', kY);
+                fig.scale('y', kX);
+                
+                startMouseCoordinates = new Point(mouseCoordinates.X, mouseCoordinates.Y);
+
+                pictureBox1.Image = null;
+            }
+            return base.ProcessCmdKey(ref message, keyData);
+        }
+
+        private void pictureBox1_LKMDown(object sender, MouseEventArgs e)
+        {
+            startMouseCoordinates = new Point(e.X, e.Y);
+            mouseCoordinates = new Point(e.X, e.Y);
+            isLKM_Down = true;
+        }
+
+        private void pictureBox1_LKMUp(object sender, MouseEventArgs e)
+        {
+            isLKM_Down = false;
+            startMouseCoordinates = new Point(0, 0);
+            mouseCoordinates = new Point(0, 0);
+        }
+
+        private void pictureBox1_LKMMove(object sender, MouseEventArgs e)
+        {
+            if (isLKM_Down)
+            {
+                if (mouseCoordinates.X == e.X && mouseCoordinates.Y == e.Y)
+                    mouseCoordinates = new Point(0, 0);
+                else
+                {
+                    mouseCoordinates = new Point(e.X, e.Y);
+                }
+            }
+        }
+        #endregion
+
+        #region функции кнопок в меню программы
         // закрыть программу
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -247,6 +323,13 @@ namespace ComGraph_Lab_5
             fig.setDefault();
             pictureBox1.Image = null;
         }
-    }
 
+        // открытие окна с помощью
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            FormHelp helpForm = new FormHelp();
+            helpForm.Show();
+        }
+        #endregion
+    }
 }

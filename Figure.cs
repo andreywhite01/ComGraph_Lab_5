@@ -14,28 +14,180 @@ namespace ComGraph_Lab_5
         const int DIMENSION = 4;
         public Figure()
         {
+            // задаем начальные координаты точек фигуры
             float[] x = new float[NUMBER_OF_VERTIX] { 0.0f, 4.0f, 2.0f, 0.5f, 0.0f, 4.0f, 2.0f, 0.5f };
             float[] y = new float[NUMBER_OF_VERTIX] { 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 3.0f, 1.5f, 1.0f };
             float[] z = new float[NUMBER_OF_VERTIX] { 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f };
 
             points = new VectorF3D(new PointF3D[NUMBER_OF_VERTIX]);
             defaultPoints = new VectorF3D(new PointF3D[NUMBER_OF_VERTIX]);
+            float scaleCoef = 50.0f;
 
             for (int i = 0; i < NUMBER_OF_VERTIX; ++i)
             {
-                points[i] = new PointF3D(x[i] * 50.0f, -y[i] * 50.0f, z[i] * 50.0f, 1.0f);
-                defaultPoints[i] = new PointF3D(x[i] * 50.0f, -y[i] * 50.0f, z[i] * 50.0f, 1.0f);
+                points[i] = new PointF3D(x[i], -y[i], z[i], 1.0f) * scaleCoef;
+                defaultPoints[i] = new PointF3D(x[i], -y[i], z[i], 1.0f) * scaleCoef;
             }
             setFaces();
             makePerspective();
         }
 
+        #region переменные
+        private VectorF3D points;
+        private VectorF3D defaultPoints;
+        private VectorF3D[] faces = new VectorF3D[6];
+        private PointF[,] faces2D;
+
+        private bool directP = true;
+        private bool onePointP = false;
+        private bool kavalieP = false;
+        private bool kabineP = false;
+        private bool ortoP = false;
+        #endregion
+
+        #region пользовательский интерфейс
         public void setDefault()
         {
             points = defaultPoints.Clone();
             setFaces();
         }
+        public void rotate(char axis, float a)
+        {
+            switch (axis)
+            {
+                case 'x':
+                    {
+                        //rotate_x = a;
+                        rotateX(a);
+                        break;
+                    }
+                case 'y':
+                    {
+                        //rotate_y = a;
+                        rotateY(a);
+                        break;
+                    }
+                case 'z':
+                    {
+                        //rotate_z = a;
+                        rotateZ(a);
+                        break;
+                    }
+                default:
+                    break;
+            }
+        }
+        public void scale(char axis, float k)
+        {
+            switch (axis)
+            {
+                case 'x':
+                    {
+                        scaleX(k);
+                        break;
+                    }
+                case 'y':
+                    {
+                        scaleY(k);
+                        break;
+                    }
+                case 'z':
+                    {
+                        scaleZ(k);
+                        break;
+                    }
+                case 'a':
+                    {
+                        scaleAll(k);
+                        break;
+                    }
+                default:
+                    break;
+            }
+        }
+        public void move(char axis, float step)
+        {
+            switch (axis)
+            {
+                case 'x':
+                    {
+                        moveX(step);
+                        break;
+                    }
+                case 'y':
+                    {
+                        moveY(step);
+                        break;
+                    }
+                case 'z':
+                    {
+                        moveZ(step);
+                        break;
+                    }
+                default:
+                    break;
+            }
+        }
+        public void reflect(char axis)
+        {
+            switch (axis)
+            {
+                case 'x':
+                    {
+                        reflectX();
+                        break;
+                    }
+                case 'y':
+                    {
+                        reflectY();
+                        break;
+                    }
+                case 'z':
+                    {
+                        reflectZ();
+                        break;
+                    }
+                default:
+                    break;
+            }
+            setFaces();
+        }
 
+        public void set_DirectPerspective()
+        {
+            offCheckedPerspective();
+            directP = true;
+        }
+        public void set_OnePointPerspective()
+        {
+            offCheckedPerspective();
+            onePointP = true;
+        }
+        // косоугольные проекции
+        public void set_KavaliePerspective()
+        {
+            offCheckedPerspective();
+            kavalieP = true;
+        }
+        public void set_KabinePerspective()
+        {
+            offCheckedPerspective();
+            kabineP = true;
+        }
+        public void set_OrtoPerspective()
+        {
+            offCheckedPerspective();
+            ortoP = true;
+        }
+
+        public PointF[,] getFacesPerspective()
+        {
+            makePerspective();
+            return faces2D;
+        }
+        #endregion
+
+        // обновление полигонов фигуры
         private void setFaces()
         {
             faces[0] = new VectorF3D(new PointF3D[DIMENSION] { points[0], points[1], points[2], points[3] });
@@ -80,33 +232,6 @@ namespace ComGraph_Lab_5
             points.dot(rotateMatrix);
             setFaces();
         }
-
-        public void rotate(char axis, float a)
-        {
-            switch (axis)
-            {
-                case 'x':
-                    {
-                        //rotate_x = a;
-                        rotateX(a);
-                        break;
-                    }
-                case 'y':
-                    {
-                        //rotate_y = a;
-                        rotateY(a);
-                        break;
-                    }
-                case 'z':
-                    {
-                        //rotate_z = a;
-                        rotateZ(a);
-                        break;
-                    }
-                default:
-                    break;
-            }
-        }
         #endregion
 
         #region масштабирование
@@ -150,35 +275,6 @@ namespace ComGraph_Lab_5
             };
             points.dot(scaleMatrix);
         }
-
-        public void scale(char axis, float k)
-        {
-            switch (axis)
-            {
-                case 'x':
-                    {
-                        scaleX(k);
-                        break;
-                    }
-                case 'y':
-                    {
-                        scaleY(k);
-                        break;
-                    }
-                case 'z':
-                    {
-                        scaleZ(k);
-                        break;
-                    }
-                case 'a':
-                    {
-                        scaleAll(k);
-                        break;
-                    }
-                default:
-                    break;
-            }
-        }
         #endregion
 
         #region перенос
@@ -211,30 +307,6 @@ namespace ComGraph_Lab_5
                 { 0, 0, k, 1 }
             };
             points.dot(moveMatrix);
-        }
-
-        public void move(char axis, float step)
-        {
-            switch (axis)
-            {
-                case 'x':
-                    {
-                        moveX(step);
-                        break;
-                    }
-                case 'y':
-                    {
-                        moveY(step);
-                        break;
-                    }
-                case 'z':
-                    {
-                        moveZ(step);
-                        break;
-                    }
-                default:
-                    break;
-            }
         }
         #endregion
 
@@ -269,35 +341,9 @@ namespace ComGraph_Lab_5
             };
             points.dot(reflectMatrix);
         }
-
-        public void reflect(char axis)
-        {
-            switch (axis)
-            {
-                case 'x':
-                    {
-                        reflectX();
-                        break;
-                    }
-                case 'y':
-                    {
-                        reflectY();
-                        break;
-                    }
-                case 'z':
-                    {
-                        reflectZ();
-                        break;
-                    }
-                default:
-                    break;
-            }
-            setFaces();
-        }
         #endregion
 
-        #region проекции
-
+        #region перспективные преобразования
         private void makePerspective()
         {
             setFaces();
@@ -328,6 +374,7 @@ namespace ComGraph_Lab_5
             }
         }
 
+        // отключаем перспективу
         private void offCheckedPerspective()
         {
             directP = false;
@@ -337,6 +384,7 @@ namespace ComGraph_Lab_5
             ortoP = false;
         }
 
+        // находим конкретную перспективу и проецируем на плоскость z=0
         private void set2DFaces(VectorF3D[] faces, float[,] perspectiveMatrix)
         {
             for (int i = 0; i < 6; ++i)
@@ -349,6 +397,7 @@ namespace ComGraph_Lab_5
             }
         }
 
+        // применяем перспективное отображение ко всем точкам фигуры
         private void applyPerspective(float[,] perspectiveMatrix)
         {
             faces2D = new PointF[6, 4];
@@ -360,7 +409,8 @@ namespace ComGraph_Lab_5
             set2DFaces(newFaces, perspectiveMatrix);
         }
 
-        public void apply_DirectPerspective()
+        // инициализируем матрицы преобразования для перспективного отображения и применяем ее
+        private void apply_DirectPerspective()
         {
             float[,] perspectiveMatrix = new float[,] {
                 { 1, 0, 0, 0 },
@@ -370,7 +420,7 @@ namespace ComGraph_Lab_5
             };
             applyPerspective(perspectiveMatrix);
         }
-        public void apply_OnePointPerspective()
+        private void apply_OnePointPerspective()
         {
             float r = -0.001f;
             float[,] perspectiveMatrix = new float[,] {
@@ -381,9 +431,8 @@ namespace ComGraph_Lab_5
             };
             applyPerspective(perspectiveMatrix);
         }
-
         // косоугольные проекции
-        public void apply_ObliquePerspective(float l, float alpha)
+        private void apply_ObliquePerspective(float l, float alpha)
         {
             float[,] perspectiveMatrix = new float[,] {
                 { 1, 0, 0, 0 },
@@ -393,81 +442,24 @@ namespace ComGraph_Lab_5
             };
             applyPerspective(perspectiveMatrix);
         }
-        public void apply_KavaliePerspective()
+        private void apply_KavaliePerspective()
         {
             float l = 1.0f;
             float alpha = (float)Math.PI / 4.0f;
             apply_ObliquePerspective(l, alpha);
         }
-        public void apply_KabinePerspective()
+        private void apply_KabinePerspective()
         {
             float l = 1/2.0f;
             float alpha = (float)Math.Atan(2);
             apply_ObliquePerspective(l, alpha);
         }
-        public void apply_OrtoPerspective()
+        private void apply_OrtoPerspective()
         {
             float l = 0.0f;
             float alpha = (float)Math.PI / 2.0f;
             apply_ObliquePerspective(l, alpha);
         }
-
-        public void set_DirectPerspective()
-        {
-            offCheckedPerspective();
-            directP = true;
-        }
-        public void set_OnePointPerspective()
-        {
-            offCheckedPerspective();
-            onePointP = true;
-        }
-        // косоугольные проекции
-        public void set_KavaliePerspective()
-        {
-            offCheckedPerspective();
-            kavalieP = true;
-        }
-        public void set_KabinePerspective()
-        {
-            offCheckedPerspective();
-            kabineP = true;
-        }
-        public void set_OrtoPerspective()
-        {
-            offCheckedPerspective();
-            ortoP = true;
-        }
-
-        public PointF[,] getFacesPerspective()
-        {
-            makePerspective();
-            return faces2D;
-        }
-
-        #endregion
-
-
-        public int  getNimberOfVertix()
-        {
-            return NUMBER_OF_VERTIX;
-        }
-
-
-        #region переменные
-        private VectorF3D points;
-        private VectorF3D defaultPoints;
-
-        private PointF[,] faces2D;
-
-        bool directP = true;
-        bool onePointP = false;
-        bool kavalieP = false;
-        bool kabineP = false;
-        bool ortoP = false;
-
-        VectorF3D[] faces = new VectorF3D[6];
         #endregion
     }
-
 }
